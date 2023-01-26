@@ -11,6 +11,7 @@
 		7F44793A297FA7D500285A4F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F447939297FA7D500285A4F /* ContentView.swift */; };
 		7F44793C297FA7D600285A4F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F44793B297FA7D600285A4F /* Assets.xcassets */; };
 		7F447940297FA7D600285A4F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F44793F297FA7D600285A4F /* Preview Assets.xcassets */; };
+		7F447947297FAFAF00285A4F /* ImageButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F447946297FAFAF00285A4F /* ImageButtonView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +21,7 @@
 		7F44793B297FA7D600285A4F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7F44793D297FA7D600285A4F /* Clima_SwiftUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Clima_SwiftUI.entitlements; sourceTree = "<group>"; };
 		7F44793F297FA7D600285A4F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		7F447946297FAFAF00285A4F /* ImageButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButtonView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 			children = (
 				7F447937297FA7D500285A4F /* Clima_SwiftUIApp.swift */,
 				7F447939297FA7D500285A4F /* ContentView.swift */,
+				7F447946297FAFAF00285A4F /* ImageButtonView.swift */,
 				7F44793B297FA7D600285A4F /* Assets.xcassets */,
 				7F44793D297FA7D600285A4F /* Clima_SwiftUI.entitlements */,
 				7F44793E297FA7D600285A4F /* Preview Content */,
@@ -141,6 +144,7 @@
 			files = (
 				7F44793A297FA7D500285A4F /* ContentView.swift in Sources */,
 				7F447938297FA7D500285A4F /* Clima_SwiftUIApp.swift in Sources */,
+				7F447947297FAFAF00285A4F /* ImageButtonView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
