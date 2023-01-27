@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 var weatherManager = WeatherManager()
 
@@ -14,6 +15,8 @@ struct ContentView: View {
     @State var temperature: String = "--"
     @State var cityName: String = "Moscow"
     @State var condition: String = "snowflake"
+    
+    var locationManager = LocationManger()
     
     
     var body: some View {
@@ -26,7 +29,7 @@ struct ContentView: View {
                     
                     //LocationButton
                     Button(action: {
-                        //
+                        locationManager.requestLocation()
                     }) {
                         ImageButtonView(systemName: "location.circle")
                     }
@@ -43,6 +46,7 @@ struct ContentView: View {
                     Button(action: {
                         weatherManager.fetchWeather(with: searchCityName)
                         searchCityName = ""
+                        
                     }) {
                         ImageButtonView(systemName: "magnifyingglass")
                     }
@@ -73,6 +77,8 @@ struct ContentView: View {
         }
         .onAppear {
             weatherManager.delegate = self
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.requestLocation()
         }
         
     }
@@ -84,7 +90,7 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
-
+//MARK: - update ui
 extension ContentView: WeatherManagerDelegate {
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
         DispatchQueue.main.async { [self] in
@@ -101,3 +107,37 @@ extension ContentView: WeatherManagerDelegate {
     
     
 }
+
+//MARK: - add location track
+
+class LocationManger: NSObject, CLLocationManagerDelegate {
+    let manager = CLLocationManager()
+    
+    override init() {
+        super.init()
+        manager.delegate = self
+        manager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
+    }
+    
+    func requestLocation() {
+        manager.requestLocation()
+    }
+    
+    func requestWhenInUseAuthorization() {
+        manager.requestWhenInUseAuthorization()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first?.coordinate {
+            weatherManager.fetchWeather(latitude: location.latitude, longitude: location.longitude)
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error.localizedDescription)
+    }
+    
+}
+
+
+
