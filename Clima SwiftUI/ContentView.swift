@@ -7,10 +7,13 @@
 
 import SwiftUI
 
+var weatherManager = WeatherManager()
+
 struct ContentView: View {
     @State var searchCityName: String = ""
     @State var temperature: String = "--"
     @State var cityName: String = "Moscow"
+    @State var condition: String = "snowflake"
     
     
     var body: some View {
@@ -32,9 +35,14 @@ struct ContentView: View {
                         .background(Color.white.opacity(0.25).cornerRadius(18))
                         .font(.system(size: 25))
                         .padding(3)
+                        .onSubmit {
+                            weatherManager.fetchWeather(with: searchCityName)                            
+                        }
                     
+                    //search button
                     Button(action: {
-                        //
+                        weatherManager.fetchWeather(with: searchCityName)
+                        searchCityName = ""
                     }) {
                         ImageButtonView(systemName: "magnifyingglass")
                     }
@@ -43,12 +51,12 @@ struct ContentView: View {
                 .padding(.bottom)
                 
                 VStack(alignment: .trailing) {
-                    Image(systemName: "snowflake")
+                    Image(systemName: condition)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 150, height: 150)
                         .foregroundColor(Color(UIColor(named: "weatherColor")!))
-                    Text("\(temperature)°C")
+                    Text("\(temperature) °C")
                         .foregroundColor(Color(UIColor(named: "weatherColor")!))
                         .font(.system(size: 100))
                         .padding(.bottom)
@@ -63,6 +71,9 @@ struct ContentView: View {
             }
             .padding(20)
         }
+        .onAppear {
+            weatherManager.delegate = self
+        }
         
     }
 }
@@ -74,3 +85,19 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 
+extension ContentView: WeatherManagerDelegate {
+    func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
+        DispatchQueue.main.async { [self] in
+            condition = weather.conditionName
+            temperature = weather.temperatureString
+            cityName = weather.name
+        
+        }
+    }
+    
+    func didFailWithError(error: Error) {
+        print(error.localizedDescription)
+    }
+    
+    
+}
